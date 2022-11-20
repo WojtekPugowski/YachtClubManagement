@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using YachtClubManagement.Entities;
+using YachtClubManagement.ClubBoats;
+using YachtClubManagement.Members;
 
 namespace YachtClubManagement.Repositories;
 

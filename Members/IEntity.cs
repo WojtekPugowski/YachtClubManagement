@@ -1,4 +1,4 @@
-namespace YachtClubManagement.Entities;
+namespace YachtClubManagement.Members;
 
 public interface IEntity
 {

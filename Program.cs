@@ -1,13 +1,17 @@
-﻿using YachtClubManagement.Data;
-using YachtClubManagement.Entities;
+﻿using YachtClubManagement.ClubBoats;
+using YachtClubManagement.Data;
+using YachtClubManagement.Members;
 using YachtClubManagement.Repositories;
 
-var memberRepository = new SqlRepository<Member>(new YcmDbContext());
+var memberRepository = new SqlRepository<Member>(new YcDbContext());
+var boatRepository = new SqlRepository<ClubBoat>(new YcDbContext());
 AddMembers(memberRepository);
 AddContender(memberRepository);
 AddInstruktor(memberRepository);
+AddClubBoat(boatRepository);
 WriteAllToConsole(memberRepository);
-
+Console.WriteLine("---- łodzie klubowe ----");
+WriteAllToConsole(boatRepository);
 
 
 static void AddMembers(IRepository<Member> memberRepository)
@@ -29,6 +33,16 @@ static void AddInstruktor(IRepository<Member> instructorRepository)
     instructorRepository.Add(new Instructor { FirstName = "Jan", SureName = "Instrukorski" });
     instructorRepository.Add(new Instructor { FirstName = "Maria", SureName = "Instrukorska" });
     instructorRepository.Save();
+}
+
+void AddClubBoat(IRepository<ClubBoat> boatRepository)
+{
+    boatRepository.Add(new ClubBoat {ClassOfBoat = "Optimist POL1222"});
+    boatRepository.Add(new ClubBoat {ClassOfBoat = "Optimist POL1329"});
+    boatRepository.Add(new ClubBoat {ClassOfBoat = "Cadet POL964"});
+    boatRepository.Save();
+
+
 }
 
 static void WriteAllToConsole(IReadRepository<IEntity> repository)

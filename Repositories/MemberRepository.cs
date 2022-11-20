@@ -1,4 +1,4 @@
-using YachtClubManagement.Entities;
+using YachtClubManagement.Members;
 
 namespace YachtClubManagement.Repositories;
 

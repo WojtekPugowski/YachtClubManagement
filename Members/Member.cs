@@ -1,6 +1,6 @@
-namespace YachtClubManagement.Entities;
+namespace YachtClubManagement.Members;
 
-public class Member : EntityBase
+public class Member : MemberBase
 {
     public string? FirstName { get; set; }
     public string? SureName { get; set; }
