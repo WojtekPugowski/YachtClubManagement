@@ -19,8 +19,8 @@ static void AddMembers(IRepository<Member> memberRepository)
 
 static void AddContender(IRepository<Member> contenderRepository)
 {
-    contenderRepository.Add(new Contender { FirstName = "Ola", SureName = "Zawodnikowski" });
-    contenderRepository.Add(new Contender { FirstName = "Tomek", SureName = "Zawodnikowska" });
+    contenderRepository.Add(new Competitor { FirstName = "Ola", SureName = "Zawodnikowski" });
+    contenderRepository.Add(new Competitor { FirstName = "Tomek", SureName = "Zawodnikowska" });
     contenderRepository.Save();
 }
 
