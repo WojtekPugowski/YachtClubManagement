@@ -2,47 +2,42 @@
 using YachtClubManagement.Data;
 using YachtClubManagement.Members;
 using YachtClubManagement.Repositories;
+using YachtClubManagement.Repositories.Extensions;
 
 var memberRepository = new SqlRepository<Member>(new YcDbContext());
 var boatRepository = new SqlRepository<ClubBoat>(new YcDbContext());
-AddMembers(memberRepository);
-AddContender(memberRepository);
-AddInstruktor(memberRepository);
-AddClubBoat(boatRepository);
-WriteAllToConsole(memberRepository);
-Console.WriteLine("---- łodzie klubowe ----");
-WriteAllToConsole(boatRepository);
 
+AddMembers(memberRepository);
+WriteAllToConsole(memberRepository);
+Console.WriteLine("\n---- łodzie klubowe ----");
+AddClubBoat(boatRepository);
+WriteAllToConsole(boatRepository);
 
 static void AddMembers(IRepository<Member> memberRepository)
 {
-    memberRepository.Add(new Member { FirstName = "Ania", SureName = "Memebrowska" });
-    memberRepository.Add(new Member { FirstName = "Tomek", SureName = "Memebrowski" });
-    memberRepository.Save();
+    var members = new List<Member>
+    {
+        new Member { FirstName = "Ania", SureName = "Membrowska" },
+        new Member { FirstName = "Tomek", SureName = "Membrowski" },
+
+        new Competitor { FirstName = "Ola", SureName = "Zawodnikowski" },
+        new Competitor { FirstName = "Tomek", SureName = "Zawodnikowska" },
+        
+        new Instructor { FirstName = "Jan", SureName = "Instrukorski" },
+        new Instructor { FirstName = "Maria", SureName = "Instrukorska" }
+    };
+    memberRepository.AddBatch(members);
 }
 
-static void AddContender(IRepository<Member> contenderRepository)
+static void AddClubBoat(IRepository<ClubBoat> clubBoatRespository)
 {
-    contenderRepository.Add(new Competitor { FirstName = "Ola", SureName = "Zawodnikowski" });
-    contenderRepository.Add(new Competitor { FirstName = "Tomek", SureName = "Zawodnikowska" });
-    contenderRepository.Save();
-}
-
-static void AddInstruktor(IRepository<Member> instructorRepository)
-{
-    instructorRepository.Add(new Instructor { FirstName = "Jan", SureName = "Instrukorski" });
-    instructorRepository.Add(new Instructor { FirstName = "Maria", SureName = "Instrukorska" });
-    instructorRepository.Save();
-}
-
-void AddClubBoat(IRepository<ClubBoat> boatRepository)
-{
-    boatRepository.Add(new ClubBoat {ClassOfBoat = "Optimist POL1222"});
-    boatRepository.Add(new ClubBoat {ClassOfBoat = "Optimist POL1329"});
-    boatRepository.Add(new ClubBoat {ClassOfBoat = "Cadet POL964"});
-    boatRepository.Save();
-
-
+    var clubBoats = new List<ClubBoat>
+    {
+        new ClubBoat { ClassOfBoat = "Optimist POL1222" },
+        new ClubBoat { ClassOfBoat = "Optimist POL1329" },
+        new ClubBoat { ClassOfBoat = "Cadet POL964" }
+    };
+    clubBoatRespository.AddBatch(clubBoats);
 }
 
 static void WriteAllToConsole(IReadRepository<IEntity> repository)
