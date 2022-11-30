@@ -4,14 +4,23 @@ using YachtClubManagement.Members;
 using YachtClubManagement.Repositories;
 using YachtClubManagement.Repositories.Extensions;
 
-var memberRepository = new SqlRepository<Member>(new YcDbContext());
-var boatRepository = new SqlRepository<ClubBoat>(new YcDbContext());
+var memberRepository = new SqlRepository<Member>(new YcDbContext(), MemberAdded);
+var boatRepository = new SqlRepository<ClubBoat>(new YcDbContext(), ClubBoatAdded);
 
 AddMembers(memberRepository);
 WriteAllToConsole(memberRepository);
 Console.WriteLine("\n---- łodzie klubowe ----");
 AddClubBoat(boatRepository);
 WriteAllToConsole(boatRepository);
+
+static void MemberAdded(Member item)
+{
+    Console.WriteLine($"{item.SureName}, {item.FirstName} added");
+}
+static void ClubBoatAdded(ClubBoat item)
+{
+    Console.WriteLine($"{item.ClassOfBoat}, added");
+}
 
 static void AddMembers(IRepository<Member> memberRepository)
 {
@@ -22,7 +31,7 @@ static void AddMembers(IRepository<Member> memberRepository)
 
         new Competitor { FirstName = "Ola", SureName = "Zawodnikowski" },
         new Competitor { FirstName = "Tomek", SureName = "Zawodnikowska" },
-        
+
         new Instructor { FirstName = "Jan", SureName = "Instrukorski" },
         new Instructor { FirstName = "Maria", SureName = "Instrukorska" }
     };
